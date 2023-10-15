@@ -6,7 +6,7 @@ Este repositório foi criado com o objetivo de automatizar o monitoramento de fa
 
 🚧 É importante ressaltar que o código foi desenvolvido para fins de estudo e não deve ser utilizado para fins maliciosos. Quaisquer danos causados pelo uso indevido do código não são de responsabilidade do autor.
 
-- [ ] O código ainda está em desenvolvimento e, portanto, algumas funcionalidades podem não estar disponíveis. Além disso, o código pode conter bugs e erros de execução, caso encontre algum, por favor, abra uma **issue** para que eu possa corrigir.
+- [x] O código ainda está em desenvolvimento e, portanto, algumas funcionalidades podem não estar disponíveis. Além disso, o código pode conter bugs e erros de execução, caso encontre algum, por favor, abra uma **issue** para que eu possa corrigir.
 
 ## Por que automatizar?
 
