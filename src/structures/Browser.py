@@ -34,5 +34,8 @@ class Browser:
 		self.driver.find_element(by=by, value=value).click()
 		time.sleep(1)
 
+	def copy_link(self, by: By, value: str):
+		return self.driver.find_element(by=by, value=value).get_attribute("href")
+
 	def get_current_url(self):
 		return self.driver.current_url
