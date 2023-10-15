@@ -1,1 +1,2 @@
-*.env
+# Excluir o arquivo secreto (.env) do repositório
+.env
