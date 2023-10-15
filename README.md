@@ -2,6 +2,14 @@
 
 Este repositório foi criado com o objetivo de automatizar o monitoramento de faltas no site do SENAC (Sistema Nacional de Aprendizagem Comercial) semanalmente.
 
+## Aviso Legal
+
+- 🚧 É importante ressaltar que o código foi desenvolvido para fins de estudo e não deve ser utilizado para fins maliciosos. Quaisquer danos causados pelo uso indevido do código não são de responsabilidade do autor.
+
+## Por que automatizar?
+
+O site do SENAC não possui uma opção de notificação de faltas, sendo assim, o aluno precisa acessar o site semanalmente para verificar se há alguma falta. Com o código, o aluno pode automatizar esse processo e receber um e-mail com a quantidade de faltas semanais.
+
 ## Como funciona?
 
 O código utiliza a biblioteca Selenium para automatizar o processo de login e navegação no site do SENAC. Após o login, o código acessa a página de frequência e verifica se há alguma falta na semana atual. Caso haja, o código envia um e-mail para o usuário com a quantidade de faltas.
@@ -38,8 +46,6 @@ python attendance.py
 	- **"`ie`" - Ie**
 
 Certifique-se de que o nome do navegador está escrito corretamente (deve ser escrito exatamente `chrome` ou o navegador desejado), caso contrário o código não irá funcionar.
-
-- É importante ressaltar que o código foi desenvolvido para fins de estudo e não deve ser utilizado para fins maliciosos. Quaisquer danos causados pelo uso indevido do código não são de responsabilidade do autor.
 
 ## Me Apoie
 
