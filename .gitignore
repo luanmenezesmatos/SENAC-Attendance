@@ -1,2 +1,3 @@
 # Excluir o arquivo secreto (.env) do repositório
-.env
+.envgit update-index --assume-unchanged .env
+# Para reverter: git update-index --no-assume-unchanged .env
