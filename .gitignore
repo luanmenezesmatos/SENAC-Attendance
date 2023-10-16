@@ -1,5 +1,6 @@
 # Excluir o arquivo secreto (.env) do repositório
 .env
+.env.example
 
 # Excluir o diretório de arquivos estáticos
 __pycache__/
