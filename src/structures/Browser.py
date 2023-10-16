@@ -1,6 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+from src.structures.Convert import Convert
+
 import time
+import json
 
 class Browser:
 	def __init__(self, browser_name):
@@ -36,6 +40,23 @@ class Browser:
 
 	def copy_link(self, by: By, value: str):
 		return self.driver.find_element(by=by, value=value).get_attribute("href")
+	
+	def save_html(self, path):
+		html = self.driver.page_source
+		html_str = str(html)  # convert html to string
+		with open(path, "w", encoding="utf-8") as f:
+			f.write(html_str)
+
+	def get_frequency_html(self):
+		# html = self.driver.find_element(By.ID, value="TERM_CLASSES$scroll$0").get_attribute("innerHTML")
+		html = self.driver.find_element(By.ID, value="TERM_CLASSES$scroll$0").get_attribute("innerHTML")
+
+		# html = html.replace(r"\n\xa", "")
+		# html = html.replace(r"\n", "")
+
+		convert = Convert(html, indent=4).convert_html_to_json()
+
+		return convert
 
 	def get_current_url(self):
 		return self.driver.current_url

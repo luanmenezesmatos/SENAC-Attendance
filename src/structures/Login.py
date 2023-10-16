@@ -19,14 +19,10 @@ class Login:
 		if self.browser.get_current_url().startswith("https://www.sp.senac.br/login-unico/login"):
 			if self.browser.driver.find_element(self.browser.by.ID, value="valid_geral").text == "E-mail não encontrado!" or self.browser.driver.find_element(self.browser.by.ID, value="valid_geral").text == "Senha incorreta!":
 				return False
-			else:
-				return True
 			
 		if self.browser.get_current_url().startswith("https://www.sp.senac.br/area-exclusiva/"):
 			if self.browser.driver.find_element(self.browser.by.CLASS_NAME, value="margtop5").text == "Avisos Gerais":
 				return True
-			else:
-				return False
 
 	def login(self):
 		self.browser.get("https://www.sp.senac.br/login-unico/login")
