@@ -3,13 +3,11 @@ from selenium.webdriver.common.by import By
 
 from src.structures.Convert import Convert
 
-from pyvirtualdisplay import Display
-
 import time
 import json
 
 class Browser:
-	def __init__(self, browser_name, headless=False):
+	def __init__(self, browser_name):
 		""" if headless == True:
 			print("Iniciando o programa no modo headless.")
 
@@ -20,8 +18,6 @@ class Browser:
 		
 		capitalize_browser_name = browser_name.capitalize()
 		print(f"Iniciando o programa no navegador {capitalize_browser_name}.")
-
-
 
 		if browser_name == "chrome".lower():
 			self.driver = webdriver.Chrome()

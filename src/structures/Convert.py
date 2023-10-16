@@ -27,7 +27,7 @@ class Convert:
 						if "TÉCNICO" in cells[index].text:
 							data.append(items)
 							items = {}
-						print(headers[index])
+						print(headers)
 						if headers[index] == "componente curricular":
 							items[headers[index]] = cells[index].text.strip()
 						else:

@@ -16,16 +16,27 @@ class Login:
 		self.browser.click_button(self.browser.by.NAME, value="formLoginButtonSubmit")
 
 	def is_logged_in(self):
+		#try:
+		if self.browser.get_current_url().startswith("https://www.sp.senac.br/login-unico/login"):
+			if self.browser.driver.find_element(self.browser.by.CLASS_NAME, value="ssp-erro__title").text == "Humpf!":
+				return print("O servidor está bloqueando o acesso. Tente novamente daqui a alguns minutos!")
+			else:
+				print("Não foi barrado pelo servidor.")
+
 		if self.browser.get_current_url().startswith("https://www.sp.senac.br/login-unico/login"):
 			if self.browser.driver.find_element(self.browser.by.ID, value="valid_geral").text == "E-mail não encontrado!" or self.browser.driver.find_element(self.browser.by.ID, value="valid_geral").text == "Senha incorreta!":
 				return False
-			
+		
 		if self.browser.get_current_url().startswith("https://www.sp.senac.br/area-exclusiva/"):
 			if self.browser.driver.find_element(self.browser.by.CLASS_NAME, value="margtop5").text == "Avisos Gerais":
 				return True
-
+		#except:
+			#return print("Erro ao verificar se está logado.")
 	def login(self):
-		self.browser.get("https://www.sp.senac.br/login-unico/login")
-		time.sleep(3)
-		self.login_senac()
-		time.sleep(3)
+		try:
+			self.browser.get("https://www.sp.senac.br/login-unico/login")
+			time.sleep(3)
+			self.login_senac()
+			time.sleep(3)
+		except:
+			return print("Erro ao logar (Função de Login).")

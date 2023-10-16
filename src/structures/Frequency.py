@@ -13,12 +13,12 @@ class Frequency:
 		return self.browser.copy_link(self.browser.by.ID, value="item-50")
 
 	def get_activities_page(self):
-		self.browser.click_button(self.browser.by.ID, value="win0divDERIVED_SSS_SCR_SSS_LINK_ANCHOR4")
+		try:
+			self.browser.click_button(self.browser.by.ID, value="win0divDERIVED_SSS_SCR_SSS_LINK_ANCHOR4")
+		except:
+			return print("Erro ao acessar página de atividades.")
 
 	def access_activity(self):
 		html = self.browser.get_frequency_html()
-
-		# Fechar o navegador
-		self.browser.driver.quit()
 		
-		return html
+		print(html)
