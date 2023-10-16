@@ -3,20 +3,35 @@ from selenium.webdriver.common.by import By
 
 from src.structures.Convert import Convert
 
+from pyvirtualdisplay import Display
+
 import time
 import json
 
 class Browser:
-	def __init__(self, browser_name):
-		if browser_name == "chrome":
+	def __init__(self, browser_name, headless=False):
+		""" if headless == True:
+			print("Iniciando o programa no modo headless.")
+
+			display = Display(visible=0, size=(800, 600))
+			display.start()
+		else:
+			print("Iniciando o programa no modo normal.") """
+		
+		capitalize_browser_name = browser_name.capitalize()
+		print(f"Iniciando o programa no navegador {capitalize_browser_name}.")
+
+
+
+		if browser_name == "chrome".lower():
 			self.driver = webdriver.Chrome()
-		elif browser_name == "firefox":
+		elif browser_name == "firefox".lower():
 			self.driver = webdriver.Firefox()
-		elif browser_name == "edge":
+		elif browser_name == "edge".lower():
 			self.driver = webdriver.Edge()
-		elif browser_name == "ie":
+		elif browser_name == "ie".lower():
 			self.driver = webdriver.Ie()
-		elif browser_name == "opera":
+		elif browser_name == "opera".lower():
 			self.driver = webdriver.Opera()
 		else:
 			raise Exception("O navegador informado não é suportado.")
@@ -54,7 +69,7 @@ class Browser:
 		# html = html.replace(r"\n\xa", "")
 		# html = html.replace(r"\n", "")
 
-		convert = Convert(html, indent=4).convert_html_to_json()
+		convert = Convert(html).convert_html_to_json()
 
 		return convert
 

@@ -16,10 +16,9 @@ class Frequency:
 		self.browser.click_button(self.browser.by.ID, value="win0divDERIVED_SSS_SCR_SSS_LINK_ANCHOR4")
 
 	def access_activity(self):
-		# ACE_DERIVED_SSS_GRD_GROUPBOX2
-
-		""" html = self.browser.find_element(By.ID, value="ACE_DERIVED_SSS_GRD_GROUPBOX2").get_attribute("innerHTML")
-		print(html) """
-
 		html = self.browser.get_frequency_html()
-		print(html)
+
+		# Fechar o navegador
+		self.browser.driver.quit()
+		
+		return html

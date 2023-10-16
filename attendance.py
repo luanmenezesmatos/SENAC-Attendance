@@ -62,7 +62,7 @@ load_dotenv()
 get_aluno_email = os.getenv("ALUNO_EMAIL")
 get_aluno_senha = os.getenv("ALUNO_SENHA")
 
-browser = Browser("chrome")
+browser = Browser("chrome", headless=True)
 login = Login(browser, get_aluno_email, get_aluno_senha)
 
 try:
