@@ -16,22 +16,29 @@ get_aluno_senha = os.getenv("ALUNO_SENHA")
 browser = Browser("chrome")
 login = Login(browser, get_aluno_email, get_aluno_senha)
 
+login.login()
+
+time.sleep(3)
+
 try:
-    login.login()
+    is_logged_in = login.is_logged_in()
 
-    time.sleep(3)
+    if is_logged_in:
+        attendance = login.write_attendance_file(is_logged_in)
+        print(attendance)
 
-    if login.is_logged_in():
+    if attendance == True:
         print("Logado com sucesso.")
 
-        if browser.get_current_url().startswith("https://www.sp.senac.br/login-unico/login") or browser.get_current_url().startswith("https://www.sp.senac.br/area-exclusiva/"):
-            if browser.driver.find_element(By.CLASS_NAME, value="ssp-erro__title").text == "Humpf!":
-                print(
-                    "O servidor está bloqueando o acesso. Tente novamente daqui a alguns minutos!")
-                browser.driver.quit()
-            else:
-                print("Não foi barrado pelo servidor.")
-        else:
+        try:
+            if browser.get_current_url().startswith("https://www.sp.senac.br/login-unico/login") or browser.get_current_url().startswith("https://www.sp.senac.br/area-exclusiva/"):
+                if browser.driver.find_element(By.CLASS_NAME, value="ssp-erro__title").text == "Humpf!":
+                    print(
+                        "O servidor está bloqueando o acesso. Tente novamente daqui a alguns minutos!")
+                    browser.driver.quit()
+                else:
+                    print("Não foi barrado pelo servidor.")
+        except:
             print("Não está na página de login e nem na página de área exclusiva.")
 
         time.sleep(3)
@@ -60,6 +67,5 @@ try:
     else:
         print("Falha ao logar.")
         browser.driver.quit()
-except:
-    browser.driver.quit()
-    raise Exception("Erro ao fazer login. Tente novamente!")
+except Exception as e:
+    print(f"Erro ao fazer login: {e}")

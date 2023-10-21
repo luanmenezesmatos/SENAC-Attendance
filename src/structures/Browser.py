@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from src.structures.Convert import Convert
 
 import time
-import json
 
 class Browser:
 	def __init__(self, browser_name):
@@ -59,15 +58,7 @@ class Browser:
 			f.write(html_str)
 
 	def get_frequency_html(self):
-		# html = self.driver.find_element(By.ID, value="TERM_CLASSES$scroll$0").get_attribute("innerHTML")
-		html = self.driver.find_element(By.ID, value="TERM_CLASSES$scroll$0").get_attribute("innerHTML")
-
-		# html = html.replace(r"\n\xa", "")
-		# html = html.replace(r"\n", "")
-
-		convert = Convert(html).convert_html_to_json()
-
-		return convert
+		return self.driver.find_element(By.ID, value="TERM_CLASSES$scroll$0").get_attribute("innerHTML")
 
 	def get_current_url(self):
 		return self.driver.current_url
