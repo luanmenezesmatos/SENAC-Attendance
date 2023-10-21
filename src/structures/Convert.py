@@ -44,9 +44,4 @@ class Convert:
 		return json.dumps(data, indent=self.indent)
 
 	def remove_empty_array(self, array):
-		if isinstance(array, list):
-			return [x for x in map(self.remove_empty_array, array) if x]
-		elif isinstance(array, dict):
-			return {k: self.remove_empty_array(v) for k, v in array.items()}
-		else:
-			return array
+		return [item for item in array if item]

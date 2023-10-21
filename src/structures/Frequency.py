@@ -32,6 +32,7 @@ class Frequency:
 
 			# Salvar o JSON em um arquivo
 			with open("frequency-tec.json", "w", encoding="utf-8") as f:
-				f.write(filtered)
+				f.write(str(filtered))
+				f.close()
 
 			print("Salvou o JSON em um arquivo.")
