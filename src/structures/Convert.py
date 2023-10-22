@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 
 from bs4 import BeautifulSoup
 
@@ -43,5 +44,10 @@ class Convert:
 					data.append(items)
 		return json.dumps(data, indent=self.indent)
 
-	def remove_empty_array(self, array):
-		return [item for item in array if item]
+	def convert_json_to_dataframe(self):
+		if self.content.endswith(".json"):
+			self.content = open(self.content, "r").read()
+
+		df = pd.read_json(self.content)
+
+		print(df)

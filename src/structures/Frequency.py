@@ -80,6 +80,12 @@ class Frequency:
 					if json_dict == {}:
 						formatted_json.remove(json_dict)
 
+				# Obter as strings vazias do JSON e substituir por "Não inserido(a)"
+				for json_dict in formatted_json:
+					for key in json_dict:
+						if json_dict[key] == "":
+							json_dict[key] = "Não inserido(a)"
+
 				time.sleep(3)
 
 				# Salvar o JSON em um arquivo
@@ -87,10 +93,11 @@ class Frequency:
 					# f.write(str(formatted_json))
 					json.dump(formatted_json, f, indent=4, ensure_ascii=False)
 					f.close()
-
+				
 					print(f"Salvou o JSON no arquivo {frequency_result_json_file}")
-
-					time.sleep(3)
+			
+					return formatted_json
 		else:
 			print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
-			quit()
+
+			return False

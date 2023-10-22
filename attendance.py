@@ -58,7 +58,6 @@ elif appConfig().is_production:
 
         if is_logged_in:
             attendance = login.write_attendance_file(is_logged_in)
-            print(attendance)
 
         if attendance == True:
             print("Logado com sucesso.")
@@ -76,7 +75,7 @@ elif appConfig().is_production:
 
             time.sleep(3)
 
-            frequency = Frequency(browser)
+            frequency = Frequency()
 
             print("Acessando página de frequência.")
 
@@ -98,7 +97,17 @@ elif appConfig().is_production:
 
             print("Acessando atividade.")
 
-            frequency.format_json()
+            formatted_json = frequency.format_json()
+
+            if formatted_json:
+                print("Passou da função de formatar o JSON.")
+
+                time.sleep(3)
+
+                dataframe = frequency.convert_json_to_dataframe()
+
+                if dataframe == True:
+                    print("Tabela criada com sucesso.")
         else:
             print("Falha ao logar.")
             browser.driver.quit()
