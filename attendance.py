@@ -11,7 +11,6 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 load_dotenv()
 
-
 get_student_email = os.getenv("STUDENT_EMAIL")
 get_student_password = os.getenv("STUDENT_PASSWORD")
 
@@ -36,7 +35,9 @@ if appConfig().is_development:
 
             time.sleep(3)
 
-            print(json)
+            frequency = Frequency()
+
+            frequency.format_json()
     else:
         print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
         quit()
@@ -44,7 +45,7 @@ elif appConfig().is_production:
     print("Iniciando o programa no modo de produção.")
 
     time.sleep(3)
-    
+
     browser = Browser("chrome")
     login = Login(browser, get_student_email, get_student_password)
 
@@ -96,6 +97,8 @@ elif appConfig().is_production:
             frequency.access_activity()
 
             print("Acessando atividade.")
+
+            frequency.format_json()
         else:
             print("Falha ao logar.")
             browser.driver.quit()
