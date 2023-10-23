@@ -8,8 +8,6 @@ load_dotenv()
 import pandas as pd
 from matplotlib import pyplot as plt
 from tabulate import tabulate
-from PIL import Image
-from io import BytesIO
 
 import os
 import json
@@ -138,17 +136,7 @@ class Frequency:
 					
 					table = tabulate(dataframe, headers='keys', tablefmt='github')
 
-					fix, ax = plt.subplots()
-					ax.axis('off')
-					ax.table(cellText=table, loc='center', cellLoc='center', colLabels=None)
-
-					img_buffer = BytesIO()
-					plt.savefig(img_buffer, format="png")
-					img_buffer.seek(0)
-
-					image = Image.open(img_buffer)
-
-					image.show()
+					
 
 					return True
 				else:

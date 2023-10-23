@@ -2,7 +2,7 @@ from config import appConfig
 from src.structures.Browser import Browser
 from src.structures.Login import Login
 from src.structures.Frequency import Frequency
-from src.modules.environmentApp import environmentApp
+from src.app.environmentApp import environmentApp
 
 import os
 import time
