@@ -12,6 +12,8 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 load_dotenv()
 
+import json
+import pandas as pd
 
 class environmentApp:
     def __init__(self, student_email, student_password, frequency_json_file, browser=None):
@@ -55,12 +57,12 @@ class environmentApp:
 
                     time.sleep(3)
 
-                    document = DocumentBuilder().create_report(formatted_json)
+                    """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 
                     if document == True:
                         print("Documento criado com sucesso.")
                     else:
-                        print("Erro ao criar o documento.")
+                        print("Erro ao criar o documento.") """
         else:
             print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
             quit()
