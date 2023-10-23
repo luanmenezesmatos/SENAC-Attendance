@@ -3,6 +3,7 @@ from src.structures.Browser import Browser
 from src.structures.Login import Login
 from src.structures.Frequency import Frequency
 from src.report.documentBuilder import DocumentBuilder
+from src.notion.notionIntegration import notionIntegration
 
 import os
 import time
@@ -44,8 +45,6 @@ class environmentApp:
             formatted_json = frequency.format_json()
 
             if formatted_json:
-                print(formatted_json)
-
                 print("Passou da função de formatar o JSON.")
 
                 time.sleep(3)
@@ -56,6 +55,13 @@ class environmentApp:
                     print("Tabela criada com sucesso.")
 
                     time.sleep(3)
+
+                    ni = notionIntegration(os.getenv("NOTION_TOKEN"))
+                    databases = ni.get_databases()
+                    print(databases)
+
+                    selected_database = ni.set_database("Attendance (SENAC)")
+                    print(selected_database)
 
                     """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 

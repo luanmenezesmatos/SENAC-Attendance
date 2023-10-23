@@ -98,9 +98,9 @@ class Frequency:
 					json.dump(formatted_json, f, indent=4, ensure_ascii=False)
 					f.close()
 				
-					print(f"Salvou o JSON no arquivo {frequency_result_json_file}")
+				print(f"Salvou o JSON no arquivo {frequency_result_json_file}")
 			
-					return formatted_json
+				return formatted_json
 		else:
 			print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
 
@@ -134,9 +134,9 @@ class Frequency:
 					
 						# f.write(tabulate(dataframe, headers='keys', tablefmt='html', showindex=False))
 					
-					table = tabulate(dataframe, headers='keys', tablefmt='github')
+					""" table = tabulate(dataframe, headers='keys', tablefmt='simple_outline')
 
-					
+					print(table) """
 
 					return True
 				else:
