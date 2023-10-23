@@ -5,6 +5,10 @@ from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 load_dotenv()
 
+import pandas as pd
+from matplotlib import pyplot as plt
+from tabulate import tabulate
+
 import os
 import json
 import time
@@ -97,6 +101,42 @@ class Frequency:
 					print(f"Salvou o JSON no arquivo {frequency_result_json_file}")
 			
 					return formatted_json
+		else:
+			print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
+
+			return False
+		
+	def generate_table(self):
+		frequency_json_file = os.getenv("FREQUENCY_RESULT_JSON_FILE")
+
+		if os.path.exists(frequency_json_file):
+			with open(frequency_json_file, "r", encoding="utf-8") as f:
+				json_str = f.read()
+				f.close()
+
+				print("Convertendo o JSON para um DataFrame...")
+
+				json_str = json.loads(json_str)
+
+				dataframe = pd.DataFrame(json_str)
+
+				if dataframe is not False:
+					print("Gerando a tabela...")
+
+					# Gerar a tabela
+					""" plt.table(cellText=dataframe.values, colLabels=dataframe.columns, loc='center', cellLoc='center')
+					plt.show() """
+
+					""" with open('table.html', 'w') as f:
+						# table = tabulate(dataframe, headers='keys', tablefmt='html', showindex=True, border="1")
+						f.write(table)
+						f.close() """
+					
+						# f.write(tabulate(dataframe, headers='keys', tablefmt='html', showindex=False))
+
+					return True
+				else:
+					return False
 		else:
 			print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
 

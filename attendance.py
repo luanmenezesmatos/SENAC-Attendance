@@ -2,6 +2,7 @@ from config import appConfig
 from src.structures.Browser import Browser
 from src.structures.Login import Login
 from src.structures.Frequency import Frequency
+from src.modules.environmentApp import environmentApp
 
 import os
 import time
@@ -15,7 +16,9 @@ get_student_email = os.getenv("STUDENT_EMAIL")
 get_student_password = os.getenv("STUDENT_PASSWORD")
 
 if appConfig().is_development:
-    print("Iniciando o programa no modo de desenvolvimento.")
+    environmentApp(get_student_email, get_student_password, os.getenv("FREQUENCY_JSON_FILE")).login_senac()
+
+    """ print("Iniciando o programa no modo de desenvolvimento.")
 
     time.sleep(3)
 
@@ -40,7 +43,7 @@ if appConfig().is_development:
             frequency.format_json()
     else:
         print("O arquivo JSON não existe. É necessário que você inicie o programa em modo de produção para que ele seja criado e depois você poderá iniciar o programa em modo de desenvolvimento.")
-        quit()
+        quit() """
 elif appConfig().is_production:
     print("Iniciando o programa no modo de produção.")
 
