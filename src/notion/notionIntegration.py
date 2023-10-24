@@ -66,7 +66,7 @@ class notionIntegration:
         
     def formatting(self, response, dataframe=False):
         queried_database = defaultdict(list)
-        all_columns = set(self.columns_attributes.keys())
+        all_columns = set(self.columns_attributes.keys()) 
 
         data = response.json()
         entries = data.get('results', [])
@@ -79,6 +79,7 @@ class notionIntegration:
                     queried_database[x].append(None)
             
             for key,value in entry['properties'].items():
+                
                 if key == "ID":
                     types = value['type']
                     if value['type']:
@@ -87,6 +88,7 @@ class notionIntegration:
                         queried_database[key].append(None)
                 else:
                     types = value['type']
+
                     if types == 'number':
                         if value[types]:
                             queried_database[key].append(value[types])
@@ -94,19 +96,19 @@ class notionIntegration:
                             queried_database[key].append(None)
                     else:
                         if value[types]:
-                            queried_database[key].append(value[types])
+                            if isinstance(value[types], dict) and value[types].get('plain_text'):
+                                queried_database[key].append(value[types]['plain_text'])
+                            elif isinstance(value[types], list) and value[types][0].get('plain_text'):
+                                queried_database[key].append(value[types][0]['plain_text'])
+                            else:
+                                queried_database[key].append(value[types])
                         else:
                             queried_database[key].append(None)
 
-            if dataframe:
-                return pandas.DataFrame(queried_database).reset_index(drop=True).set_index('ID')
-            else:
-                return dict(queried_database)
-
-        """ try:
-            
-        except:
-            raise Exception(f"Erro ao formatar os dados. Erro: {response.text}") """
+        if dataframe:
+            return pandas.DataFrame(queried_database).reset_index(drop=True).set_index('ID')
+        else:
+            return dict(queried_database)
         
     def get_all_entries(self, dataframe=False):
         """
@@ -125,8 +127,8 @@ class notionIntegration:
         
         if data.get('object') == 'list':
             return self.formatting(response, dataframe)
-
-        # return self.formatting(response, dataframe)
+        else:
+            raise Exception(f"O ID '{self.selected_database}' não é um banco de dados válido.")
     
     def query(self, query, dataframe=False):
         """
@@ -234,7 +236,7 @@ class notionIntegration:
 
             if response.status_code == 200:
                 data = response.json()
-                print(f"Valor '{data['properties']['ID']['number']}' adicionado com sucesso.")
+                print(f"Valor '{data['properties']['Componente Curricular']['title'][0]['text']['content']}' adicionado com sucesso.")
             else:
                 raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
             

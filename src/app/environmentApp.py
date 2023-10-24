@@ -66,6 +66,12 @@ class environmentApp:
                     all_entries = ni.get_all_entries()
                     print(all_entries)
 
+                    add_values = ni.add_values(
+                        values={
+                            "Componente Curricular": ["C", "D", "E", "F"],
+                        })
+                    print(add_values)
+
                     """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 
                     if document == True:
