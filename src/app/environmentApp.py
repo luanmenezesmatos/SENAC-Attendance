@@ -60,8 +60,11 @@ class environmentApp:
                     databases = ni.get_databases()
                     print(databases)
 
-                    selected_database = ni.set_database("Attendance (SENAC)")
+                    selected_database = ni.set_database("SENAC - Presença")
                     print(selected_database)
+
+                    all_entries = ni.get_all_entries()
+                    print(all_entries)
 
                     """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 
