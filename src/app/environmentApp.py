@@ -68,7 +68,7 @@ class environmentApp:
 
                     add_values = ni.add_values(
                         values={
-                            "Componente Curricular": ["C", "D", "E", "F"],
+                            "Componente Curricular": ["C", "D", "E", "F", "G"],
                         })
                     print(add_values)
 

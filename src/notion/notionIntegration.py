@@ -240,6 +240,29 @@ class notionIntegration:
             else:
                 raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
             
+            # Adiciona os valores em uma lista
+            components = []
+            for key, value in entry_data['properties'].items():
+                if key == "Componente Curricular":
+                    components.append(value['title'][0]['text']['content'])
+
+            # Ordena a lista em ordem alfabética
+            components.sort()
+
+            # Verifica se há valores repetidos na lista
+            if len(components) != len(set(components)):
+                # Excluir os valores repetidos da lista
+                for component in set(components):
+                    components.remove(component)
+                    print(components)
+
+            # Atualiza os valores no banco de dados
+            for component in components:
+                update_value = {
+                    "Componente Curricular": component
+                }
+                self.update_value(filter_query={"Componente Curricular": component}, update_value=update_value)
+            
         return f"{total_len} valores adicionados com sucesso."
     
     def update_value(self, filter_query, update_value):
