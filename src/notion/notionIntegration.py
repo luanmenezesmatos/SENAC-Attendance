@@ -232,6 +232,8 @@ class notionIntegration:
             new_entry_datas.append(new_entry_data)
 
         components = []
+        duplicated_components = []
+        count_added_values = 0
         already_exists = False
 
         for entry_data in new_entry_datas:
@@ -243,20 +245,30 @@ class notionIntegration:
                     result = self.query(query={"Componente Curricular": value['title'][0]['text']['content']}, dataframe=True)
 
                     if len(result) > 0:
+                        duplicated_components.append(value['title'][0]['text']['content'])
+
                         print(f"O componente curricular '{value['title'][0]['text']['content']}' já existe no banco de dados.")
                         already_exists = True
                     else:
                         already_exists = False
 
-            response = requests.post(request_url, headers=self.headers, json=entry_data)
+            if not already_exists:
+                response = requests.post(request_url, headers=self.headers, json=entry_data)
 
-            if response.status_code == 200:
-                data = response.json()
-                print(f"Valor '{data['properties']['Componente Curricular']['title'][0]['text']['content']}' adicionado com sucesso.")
-            else:
-                raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
+                if response.status_code == 200:
+                    data = response.json()
+                    count_added_values += 1
+                    print(f"Valor '{data['properties']['Componente Curricular']['title'][0]['text']['content']}' adicionado com sucesso.")
+                else:
+                    raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
             
-        return f"{total_len} valores adicionados com sucesso."
+        if already_exists:
+            return f"Detectei que {len(duplicated_components)} componentes curriculares já existiam no banco de dados."
+        else:
+            if count_added_values > 0 and len(duplicated_components) > 0:
+                return f"{count_added_values} valores adicionados com sucesso, porém, detectei que {len(duplicated_components)} componentes curriculares já existiam no banco de dados."
+            else:
+                return f"{count_added_values} valores adicionados com sucesso."
     
     def update_value(self, filter_query, update_value):
         """
