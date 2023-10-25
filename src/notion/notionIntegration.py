@@ -106,7 +106,7 @@ class notionIntegration:
                             queried_database[key].append(None)
 
         if dataframe:
-            return pandas.DataFrame(queried_database).reset_index(drop=True).set_index('ID')
+            return pandas.DataFrame(queried_database).reset_index(drop=True)
         else:
             return dict(queried_database)
         
@@ -230,16 +230,23 @@ class notionIntegration:
                 }
 
             new_entry_datas.append(new_entry_data)
-        
-        # Adiciona os valores em uma lista
+
         components = []
+        already_exists = False
 
         for entry_data in new_entry_datas:
             for key, value in entry_data['properties'].items():
-                if key == "Componente Curricular":
+                if key == 'Componente Curricular':
                     components.append(value['title'][0]['text']['content'])
-                
-            all_entries = self.get_all_entries()
+
+                    # Verificar se o componente curricular já existe no banco de dados
+                    result = self.query(query={"Componente Curricular": value['title'][0]['text']['content']}, dataframe=True)
+
+                    if len(result) > 0:
+                        print(f"O componente curricular '{value['title'][0]['text']['content']}' já existe no banco de dados.")
+                        already_exists = True
+                    else:
+                        already_exists = False
 
             response = requests.post(request_url, headers=self.headers, json=entry_data)
 
@@ -248,29 +255,6 @@ class notionIntegration:
                 print(f"Valor '{data['properties']['Componente Curricular']['title'][0]['text']['content']}' adicionado com sucesso.")
             else:
                 raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
-            
-            """ # Adiciona os valores em uma lista
-            components = []
-            for key, value in entry_data['properties'].items():
-                if key == "Componente Curricular":
-                    components.append(value['title'][0]['text']['content'])
-
-            # Ordena a lista em ordem alfabética
-            components.sort()
-
-            # Verifica se há valores repetidos na lista
-            if len(components) != len(set(components)):
-                # Excluir os valores repetidos da lista
-                for component in set(components):
-                    components.remove(component)
-                    print(components)
-
-            # Atualiza os valores no banco de dados
-            for component in components:
-                update_value = {
-                    "Componente Curricular": component
-                }
-                self.update_value(filter_query={"Componente Curricular": component}, update_value=update_value) """
             
         return f"{total_len} valores adicionados com sucesso."
     
