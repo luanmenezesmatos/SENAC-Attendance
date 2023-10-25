@@ -266,9 +266,9 @@ class notionIntegration:
             return f"Detectei que {len(duplicated_components)} componentes curriculares já existiam no banco de dados."
         else:
             if count_added_values > 0 and len(duplicated_components) > 0:
-                return f"{count_added_values} valores adicionados com sucesso, porém, detectei que {len(duplicated_components)} componentes curriculares já existiam no banco de dados."
+                return f"{count_added_values} valor(es) adicionados com sucesso, porém, detectei que {len(duplicated_components)} componentes curriculares já existiam no banco de dados."
             else:
-                return f"{count_added_values} valores adicionados com sucesso."
+                return f"{count_added_values} valor(es) adicionados com sucesso."
     
     def update_value(self, filter_query, update_value):
         """

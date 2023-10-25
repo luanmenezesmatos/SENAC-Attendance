@@ -64,13 +64,38 @@ class environmentApp:
                     print(selected_database)
 
                     all_entries = ni.get_all_entries()
-                    print(all_entries)
+                    if not all_entries:
+                        print("Não há entradas no banco de dados do Notion atualmente.")
 
-                    add_values = ni.add_values(
-                        values={
-                            "Componente Curricular": ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L"],
-                        })
-                    print(add_values)
+                    count = 0
+                    for entry in formatted_json:
+                        count += 1
+                        if count > len(entry['Componente Curricular']):
+                            continue
+
+                        add_values = ni.add_values(
+                            values={
+                                "Componente Curricular": [entry['Componente Curricular']],
+                                "Descrição": [entry['Descrição']],
+                                "Notas/Menções": [entry['Notas/Menções']],
+                                "Notas/Menções Oficiais": [entry['Notas/Menções Oficiais']],
+                                "Notas/Menções Revisadas": [entry['Notas/Menções Revisadas']],
+                                "Total Presenças": [entry['Total Presenças']],
+                                "% CH Aprovação": [entry['% CH Aprovação']],
+                                "Total Faltas": [entry['Total Faltas']],
+                                "% Faltas": [entry['% Faltas']],
+                                "Resultados": [entry['Resultados']],
+                                "Faltas com Amparo Legal": [entry['Faltas com Amparo Legal']],
+                                "Estágio/Complemento": [entry['Estágio/Complemento']],
+                                "Certificação Antecipada Enferm": [entry['Certificação Antecipada Enferm']],
+                                "Retomada": [entry['Retomada']],
+                                "Notas/Menções Parciais": [entry['Notas/Menções Parciais']],
+                                "Notas/Menções Consolidadas Presenciais": [entry['Notas/Menções Consolidadas Presenciais']],
+                                "Notas/Menções Consolidadas EAD": [entry['Notas/Menções Consolidadas EAD']],
+                            }
+                        )
+                        
+                        print(add_values)
 
                     """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 
