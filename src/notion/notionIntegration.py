@@ -230,8 +230,17 @@ class notionIntegration:
                 }
 
             new_entry_datas.append(new_entry_data)
+        
+        # Adiciona os valores em uma lista
+        components = []
 
         for entry_data in new_entry_datas:
+            for key, value in entry_data['properties'].items():
+                if key == "Componente Curricular":
+                    components.append(value['title'][0]['text']['content'])
+                
+            all_entries = self.get_all_entries()
+
             response = requests.post(request_url, headers=self.headers, json=entry_data)
 
             if response.status_code == 200:
@@ -240,7 +249,7 @@ class notionIntegration:
             else:
                 raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
             
-            # Adiciona os valores em uma lista
+            """ # Adiciona os valores em uma lista
             components = []
             for key, value in entry_data['properties'].items():
                 if key == "Componente Curricular":
@@ -261,7 +270,7 @@ class notionIntegration:
                 update_value = {
                     "Componente Curricular": component
                 }
-                self.update_value(filter_query={"Componente Curricular": component}, update_value=update_value)
+                self.update_value(filter_query={"Componente Curricular": component}, update_value=update_value) """
             
         return f"{total_len} valores adicionados com sucesso."
     
