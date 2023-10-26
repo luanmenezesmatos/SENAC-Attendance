@@ -75,7 +75,7 @@ class environmentApp:
 
                         add_values = ni.add_values(
                             values={
-                                "Status": [entry['Status']],
+                                "Status": [{"name": "Reprovado"}],
                                 "Componente Curricular": [entry['Componente Curricular']],
                                 "Descrição": [entry['Descrição']],
                                 "Notas/Menções": [entry['Notas/Menções']],

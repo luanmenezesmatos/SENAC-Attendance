@@ -221,6 +221,11 @@ class notionIntegration:
             for key, content in values.items():
                 if self.columns_attributes[key] == 'number':
                     final_value[key] = {self.columns_attributes[key]: content[entries]}
+                elif self.columns_attributes[key] == 'multi_select':
+                    final_value[key] = {self.columns_attributes[key]: [{"name": content[entries]}]}
+                elif self.columns_attributes[key] == 'select':
+                    print("Entrou aqui")
+                    final_value[key] = {self.columns_attributes[key]: {"name": content[entries]}}
                 else:
                     final_value[key] = {self.columns_attributes[key]: [{"text": {"content": content[entries]}}]}
 
