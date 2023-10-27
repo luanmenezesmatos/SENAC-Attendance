@@ -56,17 +56,26 @@ class environmentApp:
 
                     time.sleep(3)
 
-                    ni = notionIntegration(token=os.getenv("NOTION_TOKEN"), database_id=os.getenv("NOTION_DATABASE_ID"))
-                    databases = ni.retrive_database()
-                    
+                    ni = notionIntegration(os.getenv("NOTION_TOKEN"))
+                    databases = ni.get_databases()
+                    print(databases)
+
+                    selected_database = ni.set_database("SENAC - Presença")
+                    print(selected_database)
+
+                    all_entries = ni.get_all_entries()
+                    if not all_entries:
+                        print("Não há entradas no banco de dados do Notion atualmente.")
+
                     count = 0
                     for entry in formatted_json:
                         count += 1
                         if count > len(entry['Componente Curricular']):
                             continue
 
-                    add_values = ni.add_values(
-                        values={
+                        add_values = ni.add_values(
+                            values={
+                                "Status": [{"name": "Reprovado"}],
                                 "Componente Curricular": [entry['Componente Curricular']],
                                 "Descrição": [entry['Descrição']],
                                 "Notas/Menções": [entry['Notas/Menções']],
@@ -81,13 +90,10 @@ class environmentApp:
                                 "Estágio/Complemento": [entry['Estágio/Complemento']],
                                 "Certificação Antecipada Enferm": [entry['Certificação Antecipada Enferm']],
                                 "Retomada": [entry['Retomada']],
-                                "Notas/Menções Parciais": [entry['Notas/Menções Parciais']],
-                                "Notas/Menções Consolidadas Presenciais": [entry['Notas/Menções Consolidadas Presenciais']],
-                                "Notas/Menções Consolidadas EAD": [entry['Notas/Menções Consolidadas EAD']],
                             }
-                    )
-
-                    print(add_values)
+                        )
+                        
+                        print(add_values)
 
                     """ document = DocumentBuilder().create_table(table_data=formatted_json, dataframe=table)
 
