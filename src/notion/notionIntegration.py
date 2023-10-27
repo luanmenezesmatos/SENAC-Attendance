@@ -28,8 +28,6 @@ class notionIntegration:
             data = response.json()
 
             if data.get('object') == 'list':
-                print(data)
-
                 databases = data.get('results', [])
 
                 for db in databases:
@@ -221,24 +219,21 @@ class notionIntegration:
             final_value = {}
 
             for key, content in values.items():
+                if len(content) <= entries:
+                    raise Exception(f"O número de valores da coluna '{key}' é menor do que o número total de valores.")
                 if self.columns_attributes[key] == 'number':
                     final_value[key] = {self.columns_attributes[key]: content[entries]}
+                elif self.columns_attributes[key] == 'multi_select':
+                    final_value[key] = {self.columns_attributes[key]: [{"name": content[entries]}]}
                 elif self.columns_attributes[key] == 'select':
-                    final_value[key] = {self.columns_attributes[key]: {"name": content[entries]}}
-                    if self.columns_attributes[key] == 'select':
-                        option_ids = []
-                        for option in self.columns[key]['options']:
-                            print(content[entries])
-                            if option['name'] in content[entries]:
-                                option_ids.append(option['id'])
-                        final_value[key] = {self.columns_attributes[key]: {"select": {"option_ids": option_ids}}}
+                    final_value[key] = {self.columns_attributes[key]: {"name": content}}
                 else:
                     final_value[key] = {self.columns_attributes[key]: [{"text": {"content": content[entries]}}]}
 
-                new_entry_data = {
-                    'parent': {'database_id': self.selected_database},
-                    'properties': final_value
-                }
+            new_entry_data = {
+                'parent': {'database_id': self.selected_database},
+                'properties': final_value
+            }
 
             new_entry_datas.append(new_entry_data)
 
@@ -269,6 +264,7 @@ class notionIntegration:
                 if response.status_code == 200:
                     data = response.json()
                     count_added_values += 1
+                    print(data['properties'])
                     print(f"Valor '{data['properties']['Componente Curricular']['title'][0]['text']['content']}' adicionado com sucesso.")
                 else:
                     raise Exception(f"Código do erro: {response.status_code}. Erro ao adicionar o valor. Erro: {response.text}")
