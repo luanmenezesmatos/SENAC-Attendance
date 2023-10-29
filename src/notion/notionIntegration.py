@@ -162,7 +162,7 @@ class notionIntegration:
 
         return self.formatting(response, dataframe)
     
-    def add_value(self, value):
+    def add_value(self, value): 
         """
         Função para adicionar um valor ao banco de dados selecionado
 
